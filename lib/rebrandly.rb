@@ -39,17 +39,7 @@ class String
   end
 
   def rebrandly_lower_camelize
-    res = self.camelize
+    res = self.rebrandly_camelize
     res[0].downcase + res[1..-1]
-  end
-end
-
-class Hash
-  def self.rebrandly_stringify_keys(hash)
-    stringified_hash = {}
-    hash.each do |k, v|
-      stringified_hash[k.to_s] = v.is_a?(Hash) ? rebrandly_stringify_keys(v) : v
-    end
-    stringified_hash
   end
 end
