@@ -75,7 +75,7 @@ module Rebrandly
         when :get
           http_attrs.merge!(query: options)
         when :post
-          http_attrs.merge!(body: options)
+          http_attrs.merge!(body: options.to_json)
       end
 
       res = HTTParty.send(method, url, http_attrs)
