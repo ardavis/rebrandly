@@ -2,10 +2,10 @@ require 'rebrandly/version'
 require 'rebrandly/configuration'
 require 'rebrandly/api'
 require 'rebrandly/element'
-require 'rebrandly/link'
-require 'rebrandly/creator'
 require 'rebrandly/domain'
+require 'rebrandly/creator'
 require 'rebrandly/integration'
+require 'rebrandly/link'
 
 module Rebrandly
   class << self
@@ -26,7 +26,7 @@ module Rebrandly
 end
 
 class String
-  def underscore
+  def rebrandly_underscore
     self.gsub(/::/, '/').
     gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
     gsub(/([a-z\d])([A-Z])/,'\1_\2').
@@ -34,21 +34,21 @@ class String
     downcase
   end
 
-  def camelize
+  def rebrandly_camelize
     self.split('_').collect(&:capitalize).join
   end
 
-  def lower_camelize
+  def rebrandly_lower_camelize
     res = self.camelize
     res[0].downcase + res[1..-1]
   end
 end
 
 class Hash
-  def self.stringify_keys(hash)
+  def self.rebrandly_stringify_keys(hash)
     stringified_hash = {}
     hash.each do |k, v|
-      stringified_hash[k.to_s] = v.is_a?(Hash) ? stringify_keys(v) : v
+      stringified_hash[k.to_s] = v.is_a?(Hash) ? rebrandly_stringify_keys(v) : v
     end
     stringified_hash
   end

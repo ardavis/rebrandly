@@ -8,7 +8,7 @@ module Rebrandly
 
 
     # Associations
-    %i(domain creator integration).each do |association|
+    [:domain, :creator, :integration].each do |association|
       # Creates the getter methods, such as "@instance.domain"
       attr_reader association
 
@@ -17,7 +17,7 @@ module Rebrandly
         attrs ||= {}
 
         # Retrieve the class
-        klass = Object.const_get("Rebrandly::#{association.to_s.camelize}")
+        klass = Rebrandly.const_get(association.to_s.rebrandly_camelize)
 
         # Ex:
         #  @domain = Domain.new(attrs)

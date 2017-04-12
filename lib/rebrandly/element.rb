@@ -3,7 +3,7 @@ module Rebrandly
   class Element
     def initialize(attrs={})
       # Only set the attributes if the method exists, this way we can ignore deprecated attributes
-      attrs.each { |k,v| send("#{k.underscore}=", v) if respond_to?("#{k.underscore}=") }
+      attrs.each { |k,v| send("#{k.rebrandly_underscore}=", v) if respond_to?("#{k.rebrandly_underscore}=") }
     end
 
     def to_h
