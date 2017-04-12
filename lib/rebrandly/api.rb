@@ -68,7 +68,7 @@ module Rebrandly
     def rebrandly_request(method, url, options={})
       url = "#{BASE_URL}/#{url}"
       # Convert all hash keys into camel case for Rebrandly
-      options = Hash[options.map { |k,v| [k.to_s.rebrandly_lower_camelize.to_sym, v] }].to_json
+      options = Hash[options.map { |k,v| [k.to_s.rebrandly_lower_camelize.to_sym, v] }]
 
       http_attrs = { headers: headers }
       case method
