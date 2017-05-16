@@ -1,6 +1,9 @@
 require 'httparty'
 
 module Rebrandly
+  class RebrandlyError < StandardError; end
+  class RateLimitExceeded < RebrandlyError; end
+
   class Api
     API_VERSION = 'v1'
     BASE_URL = "https://api.rebrandly.com/#{API_VERSION}"
@@ -8,7 +11,7 @@ module Rebrandly
     # GET /v1/links
     def links(options={})
       all_links = rebrandly_request(:get, 'links', options)
-      all_links.map { Link.new(all_links.first) }
+      all_links.map { |link| Link.new(link) }
     end
 
     # GET /v1/links/:id
@@ -19,11 +22,6 @@ module Rebrandly
     # GET /v1/links/count
     def link_count(options={})
       rebrandly_request(:get, 'links/count')['count']
-    end
-
-    # GET /v1/links/new
-    def new_link(options={})
-      Link.new(rebrandly_request(:get, 'links/new', options))
     end
 
     # POST /v1/links
@@ -82,7 +80,12 @@ module Rebrandly
       if res.code == 200
         JSON.parse(res.body)
       else
-        raise res.parsed_response['message']
+        rebrandly_error = res.parsed_response
+        if rebrandly_error['domain'] == 'usageLimits' && rebrandly_error['reason'] == 'rateLimitExceeded'
+          raise RateLimitExceeded
+        else
+          raise RebrandlyError, rebrandly_error['message']
+        end
       end
     end
 
