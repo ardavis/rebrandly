@@ -43,7 +43,7 @@ module Rebrandly
     # GET /v1/domains
     def domains(options={})
       all_domains = rebrandly_request(:get, 'domains', options)
-      all_domains.map { Domain.new(all_domains.first) }
+      all_domains.map { |domain| Domain.new(domain) }
     end
 
     # GET /v1/domains/:id
