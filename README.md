@@ -41,7 +41,7 @@ api = Rebrandly::Api.new
 
 ```ruby
 api.links                           # GET /v1/links
-api.links(id)                       # GET /v1/links/:id
+api.link(id)                        # GET /v1/links/:id
 api.link_count(options)             # GET /v1/links/count
 api.new_link(options)               # GET /v1/links/new
 api.shorten(destination, options)   # POST /v1/links
