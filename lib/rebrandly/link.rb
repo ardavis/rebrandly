@@ -4,7 +4,7 @@ module Rebrandly
                   :updated_at, :status, :tags, :scripts, :forward_parameters,
                   :clicks, :last_click_date, :last_click_at, :is_public,
                   :short_url, :domain_id, :domain_name,
-                  :https, :favourite
+                  :https, :favourite, :sessions
 
 
     # Associations
